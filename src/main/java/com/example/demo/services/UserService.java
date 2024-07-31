@@ -64,4 +64,20 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error of findAllUser method in UserService.java");
         }
     }
+
+    public ResponseEntity<User> findById(Long id){
+        try {
+            Optional<User> user = userRepository.findById(id);
+
+            // add verification to exist id
+            if(user.isPresent()) {
+                return ResponseEntity.ok(user.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error of findById method in UserService.java");
+        }
+    }
 }
